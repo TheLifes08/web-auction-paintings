@@ -1,0 +1,75 @@
+html
+    head
+        meta(charset="utf-8")
+        title Аукцион картин - Картина #{painting.title}
+        include head.pug
+        script(type="text/javascript", src="/public/scripts/painting-card.min.js")
+
+    body(class="w3-light-grey")
+        include header.pug
+
+        div(id="modal-update-painting", class="w3-modal")
+            div(class="w3-modal-content w3-card-4 w3-animate-zoom")
+                header(class="w3-container w3-indigo")
+                    span(onclick="closeUpdateForm();", class="w3-button w3-display-topright") &times;
+                    h4 Изменить картину
+
+                div(class="w3-container w3-white")
+                    div(class="w3-section")
+                        label(class="w3-text-gray") Название картины
+                        input(id="update-painting-form-title", class="w3-input w3-border", onchange="checkUpdateForm();", type="text", value=painting.title)
+                    div(class="w3-section")
+                        label(class="w3-text-gray") Автор картины
+                        input(id="update-painting-form-author", class="w3-input w3-border", onchange="checkUpdateForm();", type="text", value=painting.author)
+                    div(class="w3-section")
+                        label(class="w3-text-gray") Стартовая цена
+                        input(id="update-painting-form-release-date", class="w3-input w3-border", type="range", min=0, value=painting.startPrice)
+                    div(class="w3-section")
+                        label(class="w3-text-gray") Описание книги
+                        textarea(id="update-book-form-desc", class="w3-input w3-border", onchange="checkUpdateForm();") #{painting.description}
+                    button(id="update-book-form-submit", class="w3-indigo w3-button w3-block w3-border w3-margin-bottom", onclick="updateBook(" + painting.id + ");") Обновить
+                    div(id="update-book-form-message", class="display-none w3-panel w3-display-container")
+                        span(onclick="this.parentElement.style.display='none'" class="w3-button w3-display-topright") &times;
+                        p(id="update-book-form-message-p")
+
+        section(class="w3-container")
+            div(class="w3-panel w3-white w3-border")
+                h4 Карточка картины
+                div(class="w3-white w3-border w3-col w3-margin-bottom", style="width: calc(60% - 20px); margin-right: 20px;")
+                    div(class="w3-container w3-border-bottom")
+                        p
+                            span(class="w3-text-dark-gray") Название картины:&nbsp
+                            span(id="painting-title") #{painting.title}
+                        p
+                            span(class="w3-text-dark-gray") Автор картины:&nbsp
+                            span(id="painting-author") #{painting.author}
+                        p
+                            span(class="w3-text-dark-gray") Стартовая цена:&nbsp
+                            span(id="painting-start-price") #{painting.startPrice}
+                        p
+                            span(class="w3-text-dark-gray") Минимальный шаг цены:&nbsp
+                            span(id="painting-min-step") #{painting.minimalPriceStep}
+                        p
+                            span(class="w3-text-dark-gray") Максимальный шаг цены:&nbsp
+                            span(id="painting-max-step") #{painting.maximumPriceStep}
+                        p
+                            span(class="w3-text-dark-gray") Выставлена на аукцион:&nbsp
+                            if (painting.placedOnAuction)
+                                span(id="painting-placed") Да
+                            else
+                                span(id="painting-placed") Нет
+                        if (auction)
+                            p
+                                span(class="w3-text-dark-gray") Название аукциона:&nbsp
+                                span(id="painting-max-step") #{auction.name}
+
+                    div(class="w3-container")
+                        p(class="w3-text-dark-gray") Описание:
+                        p(id="book-description") #{painting.description}
+
+                div(class="w3-white w3-border w3-col w3-margin-bottom", style="width: 40%; padding: 0px;")
+                    img(src="/public/images/paintings/" + painting.id + ".jpg" alt="Painting Image" class="w3-right" style="width: 100%;")
+
+                div(class="w3-margin-bottom w3-left")
+                    button(class="w3-indigo w3-button w3-border", onclick="changePainting("+ painting.id + ")") Изменить картину
+                    button(class="w3-indigo w3-button w3-border", onclick="deletePainting(" + painting.id + ")") Удалить картину
