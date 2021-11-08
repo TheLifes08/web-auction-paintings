@@ -3,32 +3,43 @@ html
         meta(charset="utf-8")
         title Аукцион картин
         include head.pug
+        script(type="text/javascript", src="/public/scripts/tables.min.js")
         script(type="text/javascript", src="/public/scripts/auction.min.js")
 
     body(class="w3-light-grey")
         include header.pug
 
         section(class="w3-container")
-            div(class="w3-panel w3-white w3-border w3-col", style="width: calc(80% - 20px)")
-                h4 Дата начала аукциона:
-                h4 Картины, выставленные на аукцион:
-                table(class="w3-table-all w3-margin-bottom")
-                    thead
-                        tr(class="w3-indigo")
-                            th(class="w3-right-align") ID
-                            th Название
-                            th Автор
-                            th(class="w3-center") Стартовая цена
-                            th(class="w3-center") Минимальный шаг
-                            th(class="w3-center") Максимальный шаг
-                            th
-                    tbody(id="books-table-body")
+            div(class="w3-panel w3-col", style="width: calc(70% - 20px)")
+                div(class="w3-container w3-margin-bottom w3-white w3-border")
+                    h4(class="w3-center") Аукцион еще не начался.
 
-            div(class="w3-panel w3-white w3-border w3-col", style="width: 20%; margin-left: 20px;")
-                button(class="w3-bar-item w3-button w3-block w3-indigo w3-margin-bottom") Н
-                label(for="sort-select") Параметры аукциона:
-                select(id="sort-select", class="w3-select w3-border w3-margin-bottom", onchange="sortBooks();")
-                    option(value="id", selected) По ID
-                    option(value="return-date") По дате возврата
-                    option(value="available") По наличию
-                button(class="w3-bar-item w3-button w3-block w3-indigo w3-margin-bottom", onclick="document.getElementById('modal-create-book').style.display='block'") Добавить книгу
+                div(class="w3-container w3-margin-bottom w3-white w3-border")
+                    h4 Картины, выставленные на аукцион:
+                    table(class="w3-table-all w3-margin-bottom")
+                        thead
+                            tr(class="w3-indigo")
+                                th(class="w3-right-align") ID
+                                th Название
+                                th Автор
+                                th(class="w3-center") Стартовая цена
+                                th
+                        tbody(id="paintings-table-body")
+
+                div(class="w3-container w3-margin-bottom w3-white w3-border")
+                    h4 Участники аукциона:
+                    table(class="w3-table-all w3-margin-bottom")
+                        thead
+                            tr(class="w3-indigo")
+                                th(class="w3-right-align") ID
+                                th Имя пользователя
+                                th(class="w3-center") Баланс
+                        tbody(id="users-table-body")
+
+
+            div(class="w3-panel w3-white w3-border w3-col", style="width: 30%; margin-left: 20px;")
+                h4 Информация об аукционе:
+                p Дата начала: #{auctionSettings.datetime.replace("T", " ")}
+                p Время на изучение информации: #{auctionSettings.pauseTimeout} сек.
+                p Таймаут продажи: #{auctionSettings.auctionTimeout} сек.
+                p Таймаут ставки: #{auctionSettings.betTimeout} сек.

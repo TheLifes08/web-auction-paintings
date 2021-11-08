@@ -1,34 +1,3 @@
-function createTableRow(user) {
-    let row = document.createElement("tr");
-    let cellId = document.createElement("td");
-    let cellName = document.createElement("td");
-    let cellBalance = document.createElement("td");
-    let cellParticipate = document.createElement("td");
-    let cellSettings = document.createElement("td");
-    let cellSettingsButton = document.createElement("button");
-    let cellSettingsButtonIcon = document.createElement("img");
-
-    cellId.append(document.createTextNode(user.id));
-    cellName.append(document.createTextNode(user.name));
-    cellBalance.append(document.createTextNode(user.balance));
-    cellParticipate.append(document.createTextNode((user.participate)? "Да" : "Нет"));
-    cellSettings.append(cellSettingsButton);
-    cellSettingsButton.append(cellSettingsButtonIcon);
-
-    cellId.classList.add("w3-right-align");
-    cellBalance.classList.add("w3-center");
-    cellParticipate.classList.add("w3-center");
-    cellSettingsButton.classList.add("w3-button", "w3-circle", "settings-button", "w3-right");
-    cellSettingsButton.onclick = function() {
-        openUpdateForm(user.id);
-    };
-    cellSettingsButtonIcon.classList.add("settings-button-icon");
-    cellSettingsButtonIcon.src = "/public/images/settings.png";
-
-    row.append(cellId, cellName, cellBalance, cellParticipate, cellSettings);
-    return row;
-}
-
 function updateTable() {
     $.get("/storage/users").done((users) => {
         if (users) {
@@ -36,7 +5,7 @@ function updateTable() {
             tableBody.empty();
 
             for (let user of users) {
-                let row = createTableRow(user);
+                let row = createUsersTableRow(user);
                 tableBody.append(row);
             }
         }
@@ -67,6 +36,18 @@ function openUpdateForm(id) {
     });
 }
 
+function checkUpdateForm() {
+    let correct = $("#update-user-form-balance").val() >= 0;
+
+    if (correct) {
+        $("#update-user-form-submit").removeClass("w3-disabled");
+    } else {
+        $("#update-user-form-submit").addClass("w3-disabled");
+    }
+
+    $("#update-user-form-submit").prop("disabled", !correct);
+}
+
 function closeUpdateForm() {
     $("#modal-update-user").css("display", "none");
     $("#update-user-form-message").css("display", "none");
@@ -82,7 +63,6 @@ function updateUser(user) {
                 showMessage(data.message, data.error)
 
                 if (!data.error) {
-                    console.log(data)
                     updateTable();
                 }
             }

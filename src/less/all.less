@@ -1,4 +1,9 @@
 @form-container-min-width: 50%;
+@hide-icons: false;
+
+.width(@value: 100%) {
+  width: @value;
+}
 
 .form-container {
   min-width: @form-container-min-width;
@@ -10,8 +15,13 @@
 
 .settings-button-icon {
   width: 15px;
+  display: if(@hide-icons, none, block);
 }
 
 .display-none {
   display: none;
+}
+
+.full-width {
+  .width()
 }

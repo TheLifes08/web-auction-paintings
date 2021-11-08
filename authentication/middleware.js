@@ -1,10 +1,9 @@
 function authenticationMiddleware() {
     return (request, response, next) => {
         if (request.isAuthenticated()) {
-            console.log("authed")
             return next();
         }
-        console.log("not authed")
+        console.log("Not authorized.");
         response.redirect("/login");
     };
 }

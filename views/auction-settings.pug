@@ -1,0 +1,29 @@
+html
+    head
+        meta(charset="utf-8")
+        title Аукцион картин
+        include head.pug
+        script(type="text/javascript", src="/public/scripts/auction-settings.min.js")
+
+    body(class="w3-light-grey", onload="updateData();")
+        include header.pug
+
+        section(class="w3-container")
+            div(class="w3-panel w3-white w3-border")
+                h4 Параметры аукциона
+                div(class="w3-section")
+                    label(class="w3-text-gray") Дата и время начала
+                    input(id="update-datetime", class="w3-input w3-border", onchange="checkUpdateForm();", type="datetime-local")
+                div(class="w3-section")
+                    label(class="w3-text-gray") Таймаут продажи картины
+                    input(id="update-auction-timeout", class="w3-input w3-border", onchange="checkUpdateForm();", type="number")
+                div(class="w3-section")
+                    label(class="w3-text-gray") Таймаут до окончания торгов по картине
+                    input(id="update-bet-timeout", class="w3-input w3-border", onchange="checkUpdateForm();", type="number")
+                div(class="w3-section")
+                    label(class="w3-text-gray") Время паузы на изучения информации
+                    input(id="update-pause-timeout", class="w3-input w3-border", onchange="checkUpdateForm();", type="number")
+
+                button(id="apply-button", class="w3-indigo w3-button w3-border w3-margin-right w3-margin-bottom", onclick="updateSettings();") Применить настройки
+                button(id="save-button", class="w3-indigo w3-button w3-border w3-margin-right w3-margin-bottom", onclick="saveSettings();") Сохранить настройки в файл
+                button(id="load-button", class="w3-indigo w3-button w3-border w3-margin-right w3-margin-bottom", onclick="loadSettings();") Загрузить настройки из файла

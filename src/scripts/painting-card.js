@@ -1,77 +1,127 @@
 function openUpdateForm(id) {
-    /*$.get("/paintings/" + id).done((data) => {
-        if (false) {
-            document.getElementById("book-name").textContent = response.result.name;
-            document.getElementById("book-author").textContent = response.result.author;
-            document.getElementById("book-description").textContent = response.result.description;
-            document.getElementById("book-release-date").textContent = response.result.releaseDate;
-            document.getElementById("book-available").textContent = (response.result.available) ? "Да" : "Нет";
-
-            document.getElementById("update-book-form-name").value = response.result.name;
-            document.getElementById("update-book-form-author").value = response.result.author;
-            document.getElementById("update-book-form-release-date").value = response.result.releaseDate;
-            document.getElementById("update-book-form-desc").textContent = response.result.description;
-
-            if (response.result.holder) {
-                document.getElementById("book-holder-p").style.display = "block";
-                document.getElementById("book-return-date-p").style.display = "block";
-                document.getElementById("button-return-book").style.display = "";
-                document.getElementById("button-give-book").style.display = "none";
-                document.getElementById("book-holder-name").textContent = response.result.holder.name;
-                document.getElementById("book-return-date").textContent = response.result.holder.returnDate;
-                document.getElementById("holder-info-name").textContent = response.result.holder.name;
-                document.getElementById("holder-info-return-date").textContent = response.result.holder.returnDate;
-            } else {
-                document.getElementById("book-holder-p").style.display = "none";
-                document.getElementById("book-return-date-p").style.display = "none";
-                document.getElementById("button-return-book").style.display = "none";
-                document.getElementById("button-give-book").style.display = "";
-            }
+    $.get("/storage/paintings/" + id).done((painting) => {
+        if (painting) {
+            $("#update-painting-form-title").val(painting.title);
+            $("#update-painting-form-author").val(painting.author);
+            $("#update-painting-form-start-price").val(painting.startPrice);
+            $("#update-painting-form-min-step").val(painting.minimalPriceStep);
+            $("#update-painting-form-max-step").val(painting.maximumPriceStep);
+            $("#update-painting-form-desc").val(painting.description);
+            $("#update-painting-form-placed").prop("checked", painting.placedOnAuction);
+            $("#modal-update-painting").css("display", "block");
         }
-    }*/
+    });
+}
+
+function checkUpdateForm() {
+    let title = $("#update-painting-form-title").val();
+    let author = $("#update-painting-form-author").val();
+    let startPrice = $("#update-painting-form-start-price").val();
+    let minimalPriceStep = $("#update-painting-form-min-step").val();
+    let maximumPriceStep = $("#update-painting-form-max-step").val();
+    let description = $("#update-painting-form-desc").val();
+    let file = $("#update-painting-form-file")[0].files[0];
+    let correct = true;
+
+    if (file) {
+        if (!["image/png", "image/jpeg"].includes(file.type)) {
+            correct = false;
+        }
+    }
+    if (title === "" || author === "" || description === "") {
+        correct = false;
+    }
+    if (startPrice <= 0 || minimalPriceStep <= 0 || maximumPriceStep <= 0 || maximumPriceStep < minimalPriceStep) {
+        correct = false;
+    }
+
+    if (correct) {
+        $("#update-painting-form-submit").removeClass("w3-disabled");
+    } else {
+        $("#update-painting-form-submit").addClass("w3-disabled");
+    }
+
+    $("#update-painting-form-submit").prop("disabled", !correct);
 }
 
 function closeUpdateForm() {
-    document.getElementById('modal-update-painting').style.display = "none";
-    document.getElementById('update-painting-form-message').style.display = "none";
+    $("#modal-update-painting").css("display", "none");
+    $("#update-painting-form-message").css("display", "none");
 }
 
-function changePainting(id) {
-    /*$.get("/paintings/" + id).done((data) => {
-        console.log(data)
-        if (false) {
-            document.getElementById("book-name").textContent = response.result.name;
-            document.getElementById("book-author").textContent = response.result.author;
-            document.getElementById("book-description").textContent = response.result.description;
-            document.getElementById("book-release-date").textContent = response.result.releaseDate;
-            document.getElementById("book-available").textContent = (response.result.available)? "Да" : "Нет";
+function updateData(id) {
+    $.get("/storage/paintings/" + id).done((painting) => {
+        if (painting) {
+            $("#painting-title").text(painting.title);
+            $("#painting-author").text(painting.author);
+            $("#painting-start-price").text(painting.startPrice);
+            $("#painting-min-step").text(painting.minimalPriceStep);
+            $("#painting-max-step").text(painting.maximumPriceStep);
+            $("#painting-desc").text(painting.description);
+            $("#painting-placed").text((painting.placedOnAuction)? "Да" : "Нет");
+        }
+    });
+}
 
-            document.getElementById("update-book-form-name").value = response.result.name;
-            document.getElementById("update-book-form-author").value = response.result.author;
-            document.getElementById("update-book-form-release-date").value = response.result.releaseDate;
-            document.getElementById("update-book-form-desc").textContent = response.result.description;
+function updatePainting(id) {
+    let title = $("#update-painting-form-title").val();
+    let author = $("#update-painting-form-author").val();
+    let startPrice = $("#update-painting-form-start-price").val();
+    let minimalPriceStep = $("#update-painting-form-min-step").val();
+    let maximumPriceStep = $("#update-painting-form-max-step").val();
+    let description = $("#update-painting-form-desc").val();
+    let placedOnAuction = $("#update-painting-form-placed").is(':checked');
+    let painting = {id, title, author, startPrice, minimalPriceStep, maximumPriceStep, description, placedOnAuction};
 
-            if (response.result.holder) {
-                document.getElementById("book-holder-p").style.display = "block";
-                document.getElementById("book-return-date-p").style.display = "block";
-                document.getElementById("button-return-book").style.display = "";
-                document.getElementById("button-give-book").style.display = "none";
-                document.getElementById("book-holder-name").textContent = response.result.holder.name;
-                document.getElementById("book-return-date").textContent = response.result.holder.returnDate;
-                document.getElementById("holder-info-name").textContent = response.result.holder.name;
-                document.getElementById("holder-info-return-date").textContent = response.result.holder.returnDate;
-            } else {
-                document.getElementById("book-holder-p").style.display = "none";
-                document.getElementById("book-return-date-p").style.display = "none";
-                document.getElementById("button-return-book").style.display = "none";
-                document.getElementById("button-give-book").style.display = "";
+    $.ajax({
+        url: "/storage/paintings/",
+        type: "PUT",
+        data: painting,
+        success: function (data) {
+            if (data) {
+                showMessage(data.message, data.error)
+
+                if (!data.error) {
+                    updateData(id);
+                }
             }
         }
-    });*/
+    });
+
+    let file = $("#update-painting-form-file")[0].files[0];
+    if (file) {
+        let formData = new FormData();
+        formData.append("id", id);
+        formData.append("file", file);
+
+        $.ajax({
+            url: "/storage/images/",
+            type: "PUT",
+            data: formData,
+            processData: false,
+            contentType: false,
+            enctype: 'multipart/form-data',
+            success: function (data) {
+                if (data && !data.error) {
+                    $("#painting-image").prop("src", "/public/images/paintings/" + data.filename + "?" + Math.random());
+                }
+            }
+        });
+    }
 }
 
-function deletePainting(id) {
-    $.get("/storage/paintings/" + 2).done((data) => {
-        console.log(data)
-    });
+function showMessage(text, error) {
+    let form = $("#update-painting-form-message");
+
+    $("#update-painting-form-message-p").text(text);
+
+    if (error) {
+        form.addClass("w3-red");
+        form.removeClass("w3-green");
+    } else {
+        form.addClass("w3-green");
+        form.removeClass("w3-red");
+    }
+
+    form.css("display", "block");
 }

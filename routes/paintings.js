@@ -10,12 +10,6 @@ function getPainting(id) {
     });
 }
 
-function getAuction(paintingId) {
-    return storage.auctions.find((auction) => {
-        return auction.paintings.includes(paintingId);
-    });
-}
-
 router.get("/", passport.authenticationMiddleware(), (request, response) => {
     response.render("paintings", {authenticated: request.isAuthenticated()});
 });
@@ -24,11 +18,7 @@ router.get("/:paintingId([0-9]{1,})", passport.authenticationMiddleware(), (requ
     let painting = getPainting(request.params.paintingId);
 
     if (painting) {
-        let auction = null;
-        if (painting.placedOnAuction) {
-            auction = getAuction(painting.id);
-        }
-        response.render("painting-card", {painting: painting, auction: auction, authenticated: request.isAuthenticated()});
+        response.render("painting-card", {painting: painting, authenticated: request.isAuthenticated()});
     } else {
         response.status(404);
         response.render("not-found", {authenticated: request.isAuthenticated()});

@@ -17,8 +17,8 @@ server.set("view engine", "pug");
 server.set("views", "./views");
 
 server.use(cookieParser());
-server.use(bodyParser.json());
-server.use(bodyParser.urlencoded({extended: true}));
+server.use(bodyParser.json({limit: '50mb'}));
+server.use(bodyParser.urlencoded({limit: '50mb', extended: true, parameterLimit: 50000}));
 server.use(expressSession({ secret: storage.settings.session_secret, resave: false, saveUninitialized: false }));
 server.use(passport.initialize({}));
 server.use(passport.session({}));

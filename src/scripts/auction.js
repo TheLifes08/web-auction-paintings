@@ -1,10 +1,23 @@
 $(document).ready(() => {
-    $.get("/storage/auctions").done((auctions) => {
-        if (auctions) {
-            let tableBody = $("#auctions-table-body");
+    $.get("/storage/paintings").done((paintings) => {
+        if (paintings) {
+            let filteredPaintings = paintings.filter(painting => painting.placedOnAuction);
+            let tableBody = $("#paintings-table-body");
 
-            for (let auction of auctions) {
-                let row = createTableRow(auction);
+            for (let painting of filteredPaintings) {
+                let row = createPaintingsTableSmallRow(painting);
+                tableBody.append(row);
+            }
+        }
+    });
+
+    $.get("/storage/users").done((users) => {
+        if (users) {
+            let filteredUsers = users.filter(user => user.participate);
+            let tableBody = $("#users-table-body");
+
+            for (let user of filteredUsers) {
+                let row = createUsersTableSmallRow(user);
                 tableBody.append(row);
             }
         }

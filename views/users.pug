@@ -3,6 +3,7 @@ html
         meta(charset="utf-8")
         title Аукцион картин - Пользователи
         include head.pug
+        script(type="text/javascript", src="/public/scripts/tables.min.js")
         script(type="text/javascript", src="/public/scripts/users.min.js")
 
     body(class="w3-light-grey")
@@ -17,7 +18,7 @@ html
                 div(class="w3-container w3-white")
                     div(class="w3-section")
                         label(class="w3-text-gray") Баланс
-                        input(id="update-user-form-balance", class="w3-input w3-border", type="number")
+                        input(id="update-user-form-balance", class="w3-input w3-border", type="number", onchange="checkUpdateForm()")
                     div(class="w3-section")
                         label(class="w3-text-gray") Участвует в аукционе?
                         input(id="update-user-form-participate", class="w3-input", type="checkbox")

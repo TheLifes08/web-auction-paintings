@@ -2,5 +2,6 @@
   "listen_ip": "localhost",
   "listen_http_port": 8080,
   "listen_https_port": 8443,
-  "session_secret": "6e450eb6-a5b9-4305-bf05-377b825a5f73"
+  "session_secret": "6e450eb6-a5b9-4305-bf05-377b825a5f73",
+  "paintings_storage_dir": "/home/rkolovanov/WebstormProjects/web-auction-paintings/public/images/paintings"
 }
