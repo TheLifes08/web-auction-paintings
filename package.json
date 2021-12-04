@@ -1,6 +1,6 @@
 {
   "name": "@rkolovanov/web-auction-paintings",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Auction painting application.",
   "main": "index.js",
   "scripts": {
