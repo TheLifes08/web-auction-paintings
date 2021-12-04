@@ -8,7 +8,8 @@
     "minimalPriceStep": 100000,
     "maximumPriceStep": 100000000,
     "placedOnAuction": true,
-    "imageName": "1.jpg"
+    "imageName": "1.jpg",
+    "holder": null
   },
   {
     "id": 2,
@@ -19,7 +20,8 @@
     "minimalPriceStep": 100000,
     "maximumPriceStep": 100000000,
     "placedOnAuction": true,
-    "imageName": "2.png"
+    "imageName": "2.png",
+    "holder": null
   },
   {
     "id": 3,
@@ -30,6 +32,7 @@
     "minimalPriceStep": 2500000,
     "maximumPriceStep": 2500000000,
     "placedOnAuction": false,
-    "imageName": "3.jpg"
+    "imageName": "3.jpg",
+    "holder": null
   }
 ]

@@ -1,5 +1,5 @@
 {
-  "name": "web-auction-paintings",
+  "name": "@rkolovanov/web-auction-paintings",
   "version": "1.0.0",
   "description": "Auction painting application.",
   "main": "index.js",
@@ -13,14 +13,22 @@
     "auction",
     "paintings"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheLifes08/web-auction-paintings.git"
+  },
   "author": "Rodion Kolovanov",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TheLifes08/web-auction-paintings/issues"
+  },
+  "homepage": "https://github.com/TheLifes08/web-auction-paintings#readme",
   "dependencies": {
     "@babel/core": "^7.16.0",
-    "@babel/preset-env": "^7.16.0",
+    "@babel/preset-env": "^7.16.4",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
-    "cookie-parser": "^1.4.5",
+    "cookie-parser": "^1.4.6",
     "del": "^6.0.0",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
